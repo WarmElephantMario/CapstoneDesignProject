@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './Record.css';
 
 function Header(props) {
   return (
@@ -13,7 +13,7 @@ function Article(props) {
   return <article>{props.Title}</article>;
 }
 
-function App() {
+function Record() {
   const [fileInfo, setFileInfo] = useState(null);
 
   const handleFileUpload = (event) => {
@@ -35,6 +35,7 @@ function App() {
 
   const upload = <input type="button" value="업로드하기" className="button" onClick={handleUploadClick} />;
   const submit = <input type="button" value="submit" className="button" />;
+  const record = <input type="button" value="녹음시작" />;
 
   return (
     <div>
@@ -43,6 +44,7 @@ function App() {
       <div className="article-and-buttons">
         {upload}
         {submit}
+        {record}
       </div>
       <input
         type="file"
@@ -56,4 +58,5 @@ function App() {
   );
 }
 
-export default App;
+export default Record;
+
