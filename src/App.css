@@ -1,38 +1,16 @@
-.App {
-  text-align: center;
+/* App.css */
+.button {
+  margin-right: 20px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.article-and-buttons {
+  margin-top: 20px; /* 이미지 입력하세요와 버튼 사이의 간격 */
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.output-box {
+  border: 1px solid #000; /* 검은색 테두리 */
+  padding: 10px;         /* 내부 여백 */
+  margin: 20px 0;        /* 위아래 여백 */
+  width: 300px;          /* 상자의 너비 */
+  height: 100px;         /* 상자의 높이 */
+  overflow: auto;        /* 내용이 넘칠 때 스크롤바 표시 */
+  background-color: #f9f9f9; /* 상자의 배경색 */
 }

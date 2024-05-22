@@ -1,23 +1,57 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+function Header(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <header>
+      <h1>{props.Title}</h1>
+    </header>
+  );
+}
+
+function Article(props) {
+  return <article>{props.Title}</article>;
+}
+
+function App() {
+  const [fileInfo, setFileInfo] = useState(null);
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      console.log('업로드한 이미지 파일 URL:', url);
+      setFileInfo({
+        name: file.name,
+        size: file.size,
+        url: url,
+      });
+    }
+  };
+
+  const handleUploadClick = () => {
+    document.getElementById('fileInput').click();
+  };
+
+  const upload = <input type="button" value="업로드하기" className="button" onClick={handleUploadClick} />;
+  const submit = <input type="button" value="submit" className="button" />;
+
+  return (
+    <div>
+      <Header Title="COMMA_DEMO" />
+      <Article Title="이미지를 입력해주세요" />
+      <div className="article-and-buttons">
+        {upload}
+        {submit}
+      </div>
+      <input
+        type="file"
+        id="fileInput"
+        style={{ display: 'none' }}
+        onChange={handleFileUpload}
+      />
+      <div className="output-box">
+      </div>
     </div>
   );
 }
