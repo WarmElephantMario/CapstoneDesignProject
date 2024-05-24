@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
+import { Link } from 'react-router-dom';
 
 function Header(props) {
   return (
     <header>
-      <h1>{props.Title}</h1>
+      <h1>
+        <Link to={props.href}>{props.Title}</Link>
+      </h1>
     </header>
   );
 }
@@ -31,7 +34,7 @@ function AltText() {
 
   return (
     <div>
-      <Header Title="COMMA_DEMO" />
+      <Header Title="COMMA_DEMO" href="/"/>
       <Article Title="이미지를 입력해주세요" />
       <div className="article-and-buttons">
         {upload}
