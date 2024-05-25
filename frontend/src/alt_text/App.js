@@ -19,6 +19,7 @@ function Article(props) {
 function AltText() {
   const [file, setFile] = useState(null); // 파일 상태 설정
   const [fileName, setFileName] = useState(''); // 파일명 상태 설정
+  const [description, setDescription] = useState('');
 
   const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
@@ -42,25 +43,24 @@ function AltText() {
 
       fetch('http://localhost:5000/upload', {
         method: 'POST',
-        body: formData,
+        body: formData
       })
-      .then(response => {
-        if (response.ok) {
-          console.log('파일 업로드 성공');
-          // 업로드 성공 시 추가 작업 수행
-        } else {
-          console.error('파일 업로드 실패');
-        }
-      })
-      .catch(error => {
-        console.error('파일 업로드 중 오류 발생:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          console.log('서버 응답:', data);
+          console.log(data.message);
+          console.log(data.description);
+          setDescription(data.description); // 설명 상태 업데이트
+        })
+        .catch(error => {
+          console.error('파일 업로드 중 오류 발생:', error);
+        });
     }
   };
 
   return (
     <div>
-      <Header Title="COMMA_DEMO" href="/"/>
+      <Header Title="COMMA_DEMO" href="/" />
       <Article Title="이미지를 입력해주세요" />
       <div className="article-and-buttons">
         <input type="button" value="업로드하기" className="button" onClick={handleUploadClick} />
@@ -72,8 +72,15 @@ function AltText() {
         style={{ display: 'none' }}
         onChange={handleFileUpload}
       />
-      {fileName && <div>파일명: {fileName}</div>}
+      {fileName && <div><p>파일명: {fileName}</p> <p>Uploaded Image:</p>
+          <img src={URL.createObjectURL(file)} alt={fileName} /> </div>}
+      {description && (
+        <div>
+          <h2>이미지 설명:</h2>
+        </div>
+      )}
       <div className="output-box">
+        {description}
       </div>
     </div>
   );

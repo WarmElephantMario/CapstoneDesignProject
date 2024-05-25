@@ -1,17 +1,20 @@
 {
   "dependencies": {
     "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
-    "nodemon": "^3.1.0"
+    "http": "^0.0.1-security",
+    "nodemon": "^3.1.0",
+    "openai": "^4.47.1"
   },
   "name": "demov1",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server" : "nodemon backend/server.js",
-    "front" : "cd frontend && npm start",
-    "dev" : "concurrently \"npm run server\" \"npm run front\""
+    "server": "nodemon backend/server.js",
+    "front": "cd frontend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run front\""
   },
   "author": "",
   "license": "ISC",
