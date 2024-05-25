@@ -10,7 +10,7 @@ const OpenAIApi = require('openai'); // OpenAI 패키지 불러오기
 const os = require('os');
 
 // OpenAI API 설정
-const openai = new OpenAIApi('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');
+const openai = new OpenAIApi(/*fill here your api_key*/);
 
 app.use(cors({
   origin: 'http://localhost:3000',
