@@ -41,7 +41,7 @@ function AltText() {
       const formData = new FormData();
       formData.append('file', file);
 
-      fetch('http://localhost:5000/upload', {
+      fetch('http://localhost:5000/upload/alt_text', {
         method: 'POST',
         body: formData
       })

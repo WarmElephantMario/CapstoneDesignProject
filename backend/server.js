@@ -10,7 +10,7 @@ const OpenAIApi = require('openai'); // OpenAI 패키지 불러오기
 const os = require('os');
 
 // OpenAI API 설정
-const openai = new OpenAIApi(/*fill here your api_key*/);
+const openai = new OpenAIApi('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');
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -31,8 +31,8 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 
 
-// 파일 업로드 처리
-app.post('/upload', upload.single('file'), async (req, res) => {
+// 파일 업로드 처리_대체텍스트
+app.post('/upload/alt_text', upload.single('file'), async (req, res) => {
   const filePath = path.join(__dirname, 'uploads', req.file.filename);
 
   // 업로드한 파일 경로 확인
@@ -75,6 +75,17 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     res.status(500).send('이미지 설명 생성 실패');
   }
 });
+
+
+// 파일 업로드 처리_실시간 자막
+app.post('/upload/subtitle', upload.single('file'), async (req, res) => {
+  const filePath = path.join(__dirname, 'uploads', req.file.filename);
+
+  // 업로드한 파일 경로 확인
+  console.log('업로드한 이미지 파일:', filePath);
+
+});
+
 
 // 서버 시작
 app.listen(port, () => {

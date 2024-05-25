@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import './Record.css'
 import { Link } from 'react-router-dom';
-import './Record.css';
 
 function Header(props) {
   return (
@@ -18,6 +18,7 @@ function Article(props) {
 
 function Record() {
   const [fileInfo, setFileInfo] = useState(null);
+  const [file, setFile] = useState(null); // file 상태 추가
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -29,6 +30,7 @@ function Record() {
         size: file.size,
         url: url,
       });
+      setFile(file); // file 상태 설정
     }
   };
 
@@ -36,8 +38,28 @@ function Record() {
     document.getElementById('fileInput').click();
   };
 
+  const handleFileSubmit = () => {
+    // 파일을 서버로 전송하는 코드
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      fetch('http://localhost:5000/upload/subtitle', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('서버 응답:', data);
+        })
+        .catch(error => {
+          console.error('파일 업로드 중 오류 발생:', error);
+        });
+    }
+  }
+
   const upload = <input type="button" value="업로드하기" className="button" onClick={handleUploadClick} />;
-  const submit = <input type="button" value="submit" className="button" />;
+  const submit = <input type="button" value="submit" className="button" onClick={handleFileSubmit}/>;
   const record = <input type="button" value="녹음시작" className="button" />;
 
   return (
@@ -55,8 +77,8 @@ function Record() {
         style={{ display: 'none' }}
         onChange={handleFileUpload}
       />
-      <div className="output-box">
-        {fileInfo && (
+      <div>
+      {fileInfo && (
           <div>
             <p>파일명: {fileInfo.name}</p>
             <p>파일 크기: {fileInfo.size} bytes</p>
@@ -64,6 +86,7 @@ function Record() {
           </div>
         )}
       </div>
+      <div className="output-box"></div>
     </div>
   );
 }
