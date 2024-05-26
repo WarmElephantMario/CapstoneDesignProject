@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const OpenAIApi = require('openai'); // OpenAI 패키지 불러오기
 const os = require('os');
+const uploadSubtitle = multer({ dest: 'uploads/subtitle/' });
 
 // OpenAI API 설정
 const openai = new OpenAIApi('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');
@@ -77,14 +78,17 @@ app.post('/upload/alt_text', upload.single('file'), async (req, res) => {
 });
 
 
-// 파일 업로드 처리_실시간 자막
+//실시간 자막_파일 업로드 처리 + 사진에서 키워드 추출하기
 app.post('/upload/subtitle', upload.single('file'), async (req, res) => {
   const filePath = path.join(__dirname, 'uploads', req.file.filename);
 
-  // 업로드한 파일 경로 확인
   console.log('업로드한 이미지 파일:', filePath);
-
 });
+
+//실시간 자막_ 녹음 버튼 누른 경우에 실시간 자막 생성 (키워드 바탕으로)
+// app.post('upload/record'){
+
+// };
 
 
 // 서버 시작
