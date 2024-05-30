@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Speech-to-Text</title>
+  <style>
+    .green { color: green; }
+    .red { color: red; }
+    .yellow { color: yellow; }
+  </style>
+</head>
+<body>
+  <div id="transcript"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('transcript', data => {
+      const { text, color } = data;
+      const transcriptDiv = document.getElementById('transcript');
+      transcriptDiv.innerHTML += `<p class="${color}">${text}</p>`;
+    });
+  </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Speech-to-Text</title>
+  <style>
+    .green { color: green; }
+    .red { color: red; }
+    .yellow { color: yellow; }
+  </style>
+</head>
+<body>
+  <div id="transcript"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('transcript', data => {
+      const { text, color } = data;
+      const transcriptDiv = document.getElementById('transcript');
+      transcriptDiv.innerHTML += `<p style="color: ${color};">${text}</p>`;
+    });
+  </script>
+</body>
+</html> -->
+
+
