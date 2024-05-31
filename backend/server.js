@@ -19,7 +19,7 @@ keywords = "";
 
 
 // OpenAI API 설정
-
+//여기다 api key 넣으세요
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -136,14 +136,17 @@ app.post('/upload/subtitle', upload.single('file'), async (req, res) => {
 
 
 
-//스트링 받기 실험
+//스트링 받기 실험 (녹음시작 버튼 누르면 실행됨)
+//실행 순서: 실시간으로 자막을 가져오고 -> 그걸 전역변수 keyword 이용해서 정확도 향상 -> 그걸 웹사이트에 뿌려줌
 app.post('/upload/subtitle/record', upload.single('file'), async (req, res) => {
+  
+  //여기에 계속 실시간으로 바꿔줘야 됨
   const example = "대기 중에 씨오투와 씨오가 있네요";
 
   console.log('입력 스트링:', example);
 
   try {
-    const completion = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
       messages: [
         // 수정: 키워드를 포함하여 설명을 요청
         { "role": "user", "content": `다음 string에서 부정확한 설명만 keyword에 해당하는 단어로 고쳐서 내보내줘 "${example}" with keywords: ${keywords}` }
@@ -151,9 +154,15 @@ app.post('/upload/subtitle/record', upload.single('file'), async (req, res) => {
       model: "gpt-3.5-turbo",
     });
 
-    const response = completion.choices[0].message.content;
-    console.log('GPT 답변:', response);
-    res.send(response); // 클라이언트에 응답으로 답변 전송
+    console.log(response.choices[0].message);
+    const description = response.choices[0].message.content;
+    console.log('GPT 답변:', description);
+
+    res.status(200).send({
+      message: '수정된 자막 업로드 및 설명 생성 성공',
+      description: description,
+    });
+
   } catch (error) {
     console.error('Error:', error.response.data);
     res.status(500).send('GPT와의 대화에서 오류가 발생했습니다.'); // 에러 발생 시 클라이언트에 에러 응답

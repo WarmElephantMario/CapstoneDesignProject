@@ -19,6 +19,7 @@ function Article(props) {
 function Record() {
   const [fileInfo, setFileInfo] = useState(null);
   const [file, setFile] = useState(null); // file 상태 추가
+  const [description, setDescription] = useState('');
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -61,6 +62,7 @@ function Record() {
    //여기서 마이크 키고, 실시간으로 보내주기 (서버로. /upload/record인가로 fetch?)
    const startRecoding = () => {
 
+    //이거 없애고 body에 아무것도 안 보내도 됨. 서버에서 실시간 자막 바로 gpt로 보내줌
     const exampleString = "예시 자막입니다";
 
     //실시간 생성된 raw 자막을 서버로 보내주는 코드
@@ -74,6 +76,9 @@ function Record() {
     .then(response => response.json())
     .then(data => {
       console.log('서버 응답:', data);
+      console.log(data.message);
+      console.log(data.description);
+      setDescription(data.description); // 설명 상태 업데이트
     })
     .catch(error => {
       console.error('요청 중 오류 발생:', error);
@@ -108,7 +113,9 @@ function Record() {
           </div>
         )}
       </div>
-      <div className="output-box"></div>
+      <div className="output-box">
+        {description}
+      </div>
     </div>
   );
 }
