@@ -58,9 +58,31 @@ function Record() {
     }
   }
 
+   //여기서 마이크 키고, 실시간으로 보내주기 (서버로. /upload/record인가로 fetch?)
+   const startRecoding = () => {
+
+    const exampleString = "예시 자막입니다";
+
+    //실시간 생성된 raw 자막을 서버로 보내주는 코드
+    fetch('http://localhost:5000/upload/subtitle/record', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ exampleString }) // 특정 문자열을 JSON 형태로 전송
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('서버 응답:', data);
+    })
+    .catch(error => {
+      console.error('요청 중 오류 발생:', error);
+    });
+  }
+
   const upload = <input type="button" value="업로드하기" className="button" onClick={handleUploadClick} />;
   const submit = <input type="button" value="submit" className="button" onClick={handleFileSubmit}/>;
-  const record = <input type="button" value="녹음시작" className="button" />;
+  const record = <input type="button" value="녹음시작" className="button" onClick={startRecoding}/>;
 
   return (
     <div>
