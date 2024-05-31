@@ -83,12 +83,39 @@ const AudioToText = () => {
     }
   }
 
+  //키워드 기반으로 정확도 부스팅하는 함수
+  const modifyText = (text) => {
+    return new Promise((resolve, reject) => {
+      fetch('http://localhost:5000/upload/subtitle/record', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text }) // 특정 문자열을 JSON 형태로 전송
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('서버가 생성한 수정한 응답:', data);
+        resolve(data.description);
+      })
+      .catch(error => {
+        console.error('요청 중 오류 발생:', error);
+        reject(error);
+      });
+    });
+  };
+
   const speechRecognized = (data) => {
     if (data.isFinal) {
       setCurrentRecognition("...");
       // setRecognitionHistory((old) => [data.text, ...old]);
       // 최신 자막이 밑으로 쭉 출력되도록
-      setRecognitionHistory((old) => [...old, data.text]);
+
+      //data.text를 정확도 향상해서 출력
+      modifyText(data.text)
+      .then(modifiedText => {
+        setRecognitionHistory(old => [...old, modifiedText]);
+      });
     } else setCurrentRecognition(data.text + "...");
   };
 
@@ -185,13 +212,13 @@ const AudioToText = () => {
   }, [connection, isRecording, recorder]);
 
   const upload = <input type="button" value="업로드하기" className="button" onClick={handleUploadClick} />;
-  const submit = <input type="button" value="submit" className="button" onClick={handleFileSubmit}/>;
-  const record = <input type="button" value="실시간자막시작" className="button" onClick={connect}/>;
-  const endRecord = <input type="button" value="실시간자막종료" className="button" onClick={disconnect}/>;
+  const submit = <input type="button" value="submit" className="button" onClick={handleFileSubmit} />;
+  const record = <input type="button" value="실시간자막시작" className="button" onClick={connect} />;
+  const endRecord = <input type="button" value="실시간자막종료" className="button" onClick={disconnect} />;
 
   return (
     <div>
-      <Header Title="COMMA_DEMO" href ="/"/>
+      <Header Title="COMMA_DEMO" href="/" />
       <Article Title="이미지를 입력해주세요" />
       <div className="article-and-buttons">
         {upload}
@@ -206,7 +233,7 @@ const AudioToText = () => {
         onChange={handleFileUpload}
       />
       <div>
-      {fileInfo && (
+        {fileInfo && (
           <div>
             <p>파일명: {fileInfo.name}</p>
             <p>파일 크기: {fileInfo.size} bytes</p>
@@ -215,10 +242,10 @@ const AudioToText = () => {
         )}
       </div>
       <div className="output-box">
-         {recognitionHistory.map((tx, idx) => (
-            <p key={idx}>{tx}</p>
-          ))}
-          <p>{currentRecognition}</p>
+        {recognitionHistory.map((tx, idx) => (
+          <p key={idx}>{tx}</p>
+        ))}
+        <p>{currentRecognition}</p>
       </div>
     </div>
   );
