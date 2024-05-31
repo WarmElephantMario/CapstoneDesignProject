@@ -19,7 +19,7 @@ keywords = "";
 
 
 // OpenAI API 설정
-// const openai = new OpenAIApi('sk-proj-ZzkUFR2qUTxYFZbeMDTTT3BlbkFJbjQn50LtcyyrpUjJuGmF');
+
 
 app.use(cors({
   origin: 'http://localhost:3000',
