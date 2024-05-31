@@ -12,6 +12,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
+    "socket.io-client": "^4.7.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -19,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev" : "concurrently \"npm run server\" \"npm run front\""
+    "dev": "concurrently \"npm run server\" \"npm run front\""
   },
   "eslintConfig": {
     "extends": [
