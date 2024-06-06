@@ -108,7 +108,7 @@ const AudioToText = () => {
   const speechRecognized = (data) => {
     if (data.isFinal) {
       setCurrentRecognition("...");
-      setRecognitionHistory((old) => [data.text, ...old]);
+      setRecognitionHistory((old) => [...old, data.text]);
       // 최신 자막이 밑으로 쭉 출력되도록
 
       //data.text를 정확도 향상해서 출력
