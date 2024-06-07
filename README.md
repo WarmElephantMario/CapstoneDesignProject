@@ -213,8 +213,7 @@ npm install react-router-dom web-vitals react-app
 <!--Url for Buttons-->
 [readme-en-shield]: https://img.shields.io/badge/Readme%20in%20English-lightgreen?style=for-the-badge
 [view-demo-shield]: https://img.shields.io/badge/View%20Demo%20video-darkgreen?style=for-the-badge
-<!-- 수정 필요 -->
-[view-demo-url]: https://github.com/WarmElephantMario/CapstoneDesignProject
+[view-demo-url]: https://youtu.be/WRg-AN365fc?feature=shared
 
 
 <!--URLS-->
